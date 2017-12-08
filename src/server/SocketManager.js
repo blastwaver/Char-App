@@ -5,7 +5,10 @@ const { VERIFY_USER, USER_CONNECTED, LOGOUT } = require('../Events');
 
 const { createUser, createMessage, createChat } = require('../Factories');
 
-const connectedUsers = { };
+// require('../Factories');
+
+
+let connectedUsers = { };
 
 module.exports = function(socket) {
     
@@ -25,17 +28,25 @@ module.exports = function(socket) {
           callback({isUser:true})
     
         }
-      })
-    //user connected user name
+      });
 
+    //user connected user name
+    socket.on(USER_CONNECTED,(user) => {
+        connectedUsers = addUser(connectedUsers, user);
+        socket.user = user;
+
+        io.emit(USER_CONNECTED, connectedUsers);
+        console.log(connectedUsers);
+    });
     //user disconneceted
 
     //users logouts
 }
 
-function addUser(userList, username){
+function addUser(userList, user){
     let newList = Object.assign({}, userList);
-    newList[user.name] = username;
+    newList[user.name] = user;
+    console.log(newList);
     return newList;
 }
 

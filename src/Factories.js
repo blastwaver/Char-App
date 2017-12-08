@@ -33,7 +33,7 @@ const getTime = (date) => {
     return `${date.getHour()}:${("0"+date.getMinutes()).slice(-2)}`
 }
 
-module.export = {
+module.exports = {
     createChat,
     createUser,
     createMessage
